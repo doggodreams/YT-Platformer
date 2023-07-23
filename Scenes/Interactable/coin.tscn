@@ -1,0 +1,52 @@
+[gd_scene load_steps=9 format=3 uid="uid://q2h0uctxnxmk"]
+
+[ext_resource type="Script" path="res://Scripts/Interactable/Coin.gd" id="1_bfxj4"]
+[ext_resource type="Texture2D" uid="uid://dn52e3sicx4vq" path="res://Imports/Sprites/EpisodeFour/Coin/01.png" id="1_ksucs"]
+[ext_resource type="Texture2D" uid="uid://b33m82baxl237" path="res://Imports/Sprites/EpisodeFour/Coin/02.png" id="2_i0ffq"]
+[ext_resource type="Texture2D" uid="uid://dw2yurj03x71w" path="res://Imports/Sprites/EpisodeFour/Coin/03.png" id="3_v5pkg"]
+[ext_resource type="Texture2D" uid="uid://d2bpcpdu032qt" path="res://Imports/Sprites/EpisodeFour/Coin/04.png" id="4_th8yw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pu1uv"]
+size = Vector2(11, 11)
+
+[sub_resource type="Animation" id="Animation_ruiy5"]
+resource_name = "Idle"
+length = 0.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("1_ksucs"), ExtResource("2_i0ffq"), ExtResource("3_v5pkg"), ExtResource("4_th8yw")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dkliy"]
+_data = {
+"Idle": SubResource("Animation_ruiy5")
+}
+
+[node name="Coin" type="Node2D"]
+script = ExtResource("1_bfxj4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ksucs")
+
+[node name="Area2D" type="Area2D" parent="."]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_pu1uv")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_dkliy")
+}
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

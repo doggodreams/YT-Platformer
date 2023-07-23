@@ -1,0 +1,71 @@
+[gd_scene load_steps=6 format=3 uid="uid://7qwhguwvqfnx"]
+
+[ext_resource type="Texture2D" uid="uid://h7q6vkjbam4p" path="res://Imports/Sprites/EpisodeEight/Spikes.png" id="1_o8imd"]
+[ext_resource type="Script" path="res://Scripts/Interactable/FallingSpikes.gd" id="1_wums2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sw4sx"]
+size = Vector2(27, 166)
+
+[sub_resource type="Animation" id="Animation_f754g"]
+resource_name = "Shake"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-2, 0), Vector2(0, 0), Vector2(2, 0), Vector2(0, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"fall"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5770e"]
+_data = {
+"Shake": SubResource("Animation_f754g")
+}
+
+[node name="FallingSpikes" type="Node2D"]
+position = Vector2(1, 16)
+script = ExtResource("1_wums2")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 3.14159
+texture = ExtResource("1_o8imd")
+
+[node name="Hitbox" type="Area2D" parent="."]
+monitorable = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hitbox"]
+polygon = PackedVector2Array(-12, -11, -10, -16, -7, -16, 9, -16, 11, -13, 11, -10, 8, -5, 0, 0, -1, 0, -9, -3, -12, -8)
+
+[node name="PlayerDetect" type="Area2D" parent="."]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetect"]
+position = Vector2(-0.5, 67)
+shape = SubResource("RectangleShape2D_sw4sx")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_5770e")
+}
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="area_entered" from="PlayerDetect" to="." method="_on_player_detect_area_entered"]
