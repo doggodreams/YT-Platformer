@@ -1,0 +1,62 @@
+[gd_scene load_steps=6 format=3 uid="uid://duxyp70hl5wae"]
+
+[ext_resource type="Script" path="res://Scripts/Interactable/CanonBall.gd" id="1_0l4gf"]
+[ext_resource type="Texture2D" uid="uid://cwdclrlqjfs2a" path="res://Imports/Sprites/EpisodeEleven/Cannon/Cannon Ball Idle/1.png" id="2_43gf3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hbeb7"]
+radius = 8.0
+
+[sub_resource type="Animation" id="Animation_1gdpb"]
+resource_name = "Hit"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5klgj"]
+_data = {
+"Hit": SubResource("Animation_1gdpb")
+}
+
+[node name="CanonBall" type="Node2D"]
+script = ExtResource("1_0l4gf")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_43gf3")
+
+[node name="Area2D" type="Area2D" parent="."]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-0.501133, 0.501131)
+shape = SubResource("CircleShape2D_hbeb7")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_5klgj")
+}
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
