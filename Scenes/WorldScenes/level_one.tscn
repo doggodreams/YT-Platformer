@@ -2402,7 +2402,3 @@ position = Vector2(308, 232)
 
 [node name="Canon" parent="." instance=ExtResource("16_4dunb")]
 position = Vector2(1307, 196)
-
-[node name="Canon2" parent="." instance=ExtResource("16_4dunb")]
-position = Vector2(73, 187)
-scale = Vector2(-1, 1)

@@ -1,6 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://hcr6ccmaap4r"]
+[gd_scene load_steps=23 format=3 uid="uid://hcr6ccmaap4r"]
 
 [ext_resource type="Script" path="res://Scripts/Enemies/Sabertooth.gd" id="1_6vv7q"]
+[ext_resource type="PackedScene" uid="uid://cjx56wqymmobb" path="res://Scenes/UI/healthbar.tscn" id="2_krfq4"]
 [ext_resource type="Texture2D" uid="uid://m4ch3h02ne3s" path="res://Imports/Sprites/EpisodeSeven/02-Run/Run 01.png" id="3_ke5l5"]
 [ext_resource type="Texture2D" uid="uid://b1ccorl52vv8t" path="res://Imports/Sprites/EpisodeSeven/02-Run/Run 02.png" id="4_bc0hq"]
 [ext_resource type="Texture2D" uid="uid://b7ppj0vhypk8s" path="res://Imports/Sprites/EpisodeSeven/02-Run/Run 03.png" id="5_bogix"]
@@ -11,6 +12,10 @@
 [ext_resource type="Texture2D" uid="uid://cfxswtsdpca22" path="res://Imports/Sprites/EpisodeSeven/09-Dead Hit/Dead Hit 02.png" id="9_3ctmt"]
 [ext_resource type="Texture2D" uid="uid://bn512rou0vs1s" path="res://Imports/Sprites/EpisodeSeven/09-Dead Hit/Dead Hit 03.png" id="10_jus0w"]
 [ext_resource type="Texture2D" uid="uid://dbap8w7lnub8b" path="res://Imports/Sprites/EpisodeSeven/09-Dead Hit/Dead Hit 04.png" id="11_4d64y"]
+[ext_resource type="Texture2D" uid="uid://b3ex6yfjn4d1d" path="res://Imports/Sprites/EpisodeSeven/08-Hit/Hit 01.png" id="13_pxscx"]
+[ext_resource type="Texture2D" uid="uid://bfby3ibuw7e7x" path="res://Imports/Sprites/EpisodeSeven/08-Hit/Hit 02.png" id="14_0ipfg"]
+[ext_resource type="Texture2D" uid="uid://b8t13hrl42mds" path="res://Imports/Sprites/EpisodeSeven/08-Hit/Hit 03.png" id="15_efsrx"]
+[ext_resource type="Texture2D" uid="uid://cfops4ivsynbo" path="res://Imports/Sprites/EpisodeSeven/08-Hit/Hit 04.png" id="16_b6o4u"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ki2sl"]
 radius = 9.0
@@ -90,15 +95,53 @@ tracks/1/keys = {
 "values": [Vector2(0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_laocd"]
+resource_name = "Hit"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("13_pxscx"), ExtResource("14_0ipfg"), ExtResource("15_efsrx"), ExtResource("16_b6o4u")]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"get_hit"
+}, {
+"args": [],
+"method": &"get_hit"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6l0yn"]
 _data = {
 "Die": SubResource("Animation_fnixj"),
+"Hit": SubResource("Animation_laocd"),
 "Run": SubResource("Animation_jcclx")
 }
 
 [node name="SaberTooth" type="CharacterBody2D" groups=["Enemies"]]
 collision_layer = 2
 script = ExtResource("1_6vv7q")
+
+[node name="Healthbar" parent="." instance=ExtResource("2_krfq4")]
+offset_top = -17.0
+offset_bottom = -17.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("3_ke5l5")

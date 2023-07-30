@@ -14,6 +14,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var max_health = 2
 var health = 0
 var can_take_damage = true
+@export var hit = false
 
 
 func _ready():
@@ -21,7 +22,7 @@ func _ready():
 	GameManager.player = self
 
 func _process(_delta):
-	if Input.is_action_just_pressed("attack"):
+	if Input.is_action_just_pressed("attack") && !hit:
 		attack()
 
 func _physics_process(delta):
@@ -61,7 +62,7 @@ func attack():
 	animation.play("Attack")
 
 func update_animation():
-	if !attacking:
+	if !attacking && !hit:
 		if velocity.x != 0:
 			animation.play("Run")
 		else:
@@ -75,6 +76,10 @@ func update_animation():
 func take_damage(damage_amount : int):
 	if can_take_damage:
 		iframes()
+		
+		hit = true
+		attacking = false
+		animation.play("Hit")
 		
 		health -= damage_amount
 		

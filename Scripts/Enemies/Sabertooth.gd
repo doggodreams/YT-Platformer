@@ -1,14 +1,18 @@
 extends CharacterBody2D
 
 @export var speed = -60.0
+var current_speed = 0.0
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 var facing_right = false
 var dead = false
 
-var max_health = 1
+var max_health = 5
 var health
+
+var hit = false
+var can_attack = true
 
 
 func _ready():
@@ -35,14 +39,31 @@ func flip():
 		speed = abs(speed) * -1
 
 func _on_hitbox_area_entered(area):
-	if area.get_parent() is Player && !dead:
+	if area.get_parent() is Player && !dead && can_attack:
 		area.get_parent().take_damage(1)
 
 func take_damage(damage_amount):
-	health -= damage_amount
+	if !dead:
+		$AnimationPlayer.play("Hit")
+		
+		health -= damage_amount
+		
+		get_node("Healthbar").update_healthbar(health, max_health)
+		
+		if health <= 0:
+			die()
+
+func get_hit():
+	hit = !hit
 	
-	if health <= 0:
-		die()
+	if hit:
+		current_speed = speed
+		speed = 0
+		can_attack = false
+	else:
+		speed = current_speed
+		can_attack = true
+		$AnimationPlayer.play("Run")
 
 func die():
 	dead = true

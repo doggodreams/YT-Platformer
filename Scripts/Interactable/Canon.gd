@@ -31,6 +31,8 @@ func fire():
 func take_damage(damage_amount):
 	health -= damage_amount
 	
+	get_node("Healthbar").update_healthbar(health, max_health)
+	
 	animation_player.play("Hit")
 	
 	if health <= 0:
