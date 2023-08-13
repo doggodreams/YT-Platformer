@@ -2286,6 +2286,7 @@ offset_bottom = 776.0
 texture = ExtResource("1_awxur")
 
 [node name="UIManager" type="CanvasLayer" parent="."]
+process_mode = 3
 script = ExtResource("8_qm0j3")
 
 [node name="CoinIcon" type="TextureRect" parent="UIManager"]
@@ -2301,6 +2302,110 @@ offset_bottom = 44.0
 theme_override_colors/font_color = Color(0.199219, 0.195313, 0.238281, 1)
 theme_override_font_sizes/font_size = 20
 text = "0"
+
+[node name="PauseMenu" type="ColorRect" parent="UIManager"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -80.0
+offset_right = 60.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.286275, 0.286275, 0.431373, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UIManager/PauseMenu"]
+layout_mode = 0
+offset_top = 10.0
+offset_right = 120.0
+offset_bottom = 150.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UIManager/PauseMenu/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Resume" type="Button" parent="UIManager/PauseMenu/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 2
+text = "Resume"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UIManager/PauseMenu/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Restart" type="Button" parent="UIManager/PauseMenu/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 2
+text = "Restart"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="UIManager/PauseMenu/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="WorldMap" type="Button" parent="UIManager/PauseMenu/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 2
+text = "World Map"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="UIManager/PauseMenu/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Quit" type="Button" parent="UIManager/PauseMenu/VBoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 2
+text = "Quit"
+
+[node name="WinScreen" type="ColorRect" parent="UIManager"]
+visible = false
+custom_minimum_size = Vector2(240, 120)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -60.0
+offset_right = 120.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.286275, 0.286275, 0.431373, 1)
+
+[node name="Label" type="Label" parent="UIManager/WinScreen"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -42.0
+offset_right = 42.0
+offset_bottom = 26.0
+grow_horizontal = 2
+text = "Score:1300"
+
+[node name="Restart" type="Button" parent="UIManager/WinScreen"]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 0
+offset_left = 4.0
+offset_top = 85.0
+offset_right = 69.0
+offset_bottom = 116.0
+text = "Restart
+"
+
+[node name="FinnishLevel" type="Button" parent="UIManager/WinScreen"]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 0
+offset_left = 166.0
+offset_top = 85.0
+offset_right = 236.0
+offset_bottom = 116.0
+text = "Resume
+"
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_w8glp")
@@ -2334,6 +2439,10 @@ spawnpoint = true
 
 [node name="Checkpoint2" parent="Checkpoints" instance=ExtResource("5_d712a")]
 position = Vector2(635, 274)
+
+[node name="Checkpoint3" parent="Checkpoints" instance=ExtResource("5_d712a")]
+position = Vector2(1360, 162)
+win_condition = true
 
 [node name="Spike" type="Node2D" parent="."]
 
@@ -2402,3 +2511,10 @@ position = Vector2(308, 232)
 
 [node name="Canon" parent="." instance=ExtResource("16_4dunb")]
 position = Vector2(1307, 196)
+
+[connection signal="pressed" from="UIManager/PauseMenu/VBoxContainer/HBoxContainer/Resume" to="UIManager" method="_on_resume_pressed"]
+[connection signal="pressed" from="UIManager/PauseMenu/VBoxContainer/HBoxContainer2/Restart" to="UIManager" method="_on_restart_pressed"]
+[connection signal="pressed" from="UIManager/PauseMenu/VBoxContainer/HBoxContainer3/WorldMap" to="UIManager" method="_on_world_map_pressed"]
+[connection signal="pressed" from="UIManager/PauseMenu/VBoxContainer/HBoxContainer4/Quit" to="UIManager" method="_on_quit_pressed"]
+[connection signal="pressed" from="UIManager/WinScreen/Restart" to="UIManager" method="_on_restart_pressed"]
+[connection signal="pressed" from="UIManager/WinScreen/FinnishLevel" to="UIManager" method="_on_finnish_level_pressed"]
