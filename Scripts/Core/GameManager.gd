@@ -1,6 +1,7 @@
 extends Node
 
 signal gained_coins()
+signal level_beaten()
 
 var coins : int
 var score : int = 0
@@ -11,6 +12,7 @@ var win_screen
 var score_label
 
 var player : Player
+var damage_taken = 0
 
 var paused = false
 
@@ -25,6 +27,7 @@ func gain_coins(coins_gained : int):
 	emit_signal("gained_coins")
 
 func win():
+	emit_signal("level_beaten")
 	win_screen.visible = true
 	
 	score_label.text = "score:" + str(score)

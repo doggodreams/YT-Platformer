@@ -11,13 +11,14 @@ config_version=5
 [application]
 
 config/name="Yt Platformer"
-run/main_scene="res://Scenes/WorldScenes/level_one.tscn"
+run/main_scene="res://Scenes/WorldScenes/Level1.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 GameManager="*res://Scripts/Core/GameManager.gd"
+LevelData="*res://Scripts/Core/LevelData.gd"
 
 [display]
 

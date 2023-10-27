@@ -1,7 +1,8 @@
-[gd_scene load_steps=22 format=3 uid="uid://bnn5auppa73q5"]
+[gd_scene load_steps=23 format=3 uid="uid://bnn5auppa73q5"]
 
 [ext_resource type="Texture2D" uid="uid://cym5u1f0nctbl" path="res://Imports/Sprites/EpisodeFour/Spritesheet/BG Image.png" id="1_awxur"]
 [ext_resource type="PackedScene" uid="uid://c6krylhn5lg3x" path="res://Scenes/Entities/player.tscn" id="1_lye1r"]
+[ext_resource type="Script" path="res://Scripts/Core/RunTimeLevel.gd" id="1_p15d7"]
 [ext_resource type="Texture2D" uid="uid://3jem7smeqs5t" path="res://Imports/Sprites/EpisodeThree/Terrain/Terrain (32x32).png" id="2_q7qlv"]
 [ext_resource type="Texture2D" uid="uid://bvruk48e2mkcy" path="res://Imports/Sprites/EpisodeFour/Spritesheet/Spritesheet-export.png" id="3_e42c7"]
 [ext_resource type="PackedScene" uid="uid://c0lrsxqxorx51" path="res://Scenes/Interactable/checkpoint.tscn" id="5_d712a"]
@@ -2267,7 +2268,8 @@ sources/2 = SubResource("TileSetAtlasSource_gb5ym")
 sources/1 = SubResource("TileSetAtlasSource_clgba")
 sources/3 = SubResource("TileSetAtlasSource_ud7jb")
 
-[node name="LevelOne" type="Node2D"]
+[node name="Level1" type="Node2D"]
+script = ExtResource("1_p15d7")
 
 [node name="Background" type="TextureRect" parent="."]
 z_index = -2
@@ -2444,44 +2446,6 @@ position = Vector2(635, 274)
 position = Vector2(1360, 162)
 win_condition = true
 
-[node name="Spike" type="Node2D" parent="."]
-
-[node name="Spikes" parent="Spike" instance=ExtResource("6_e7wrs")]
-position = Vector2(433, 272)
-
-[node name="Spikes2" parent="Spike" instance=ExtResource("6_e7wrs")]
-position = Vector2(576, 304)
-
-[node name="Spikes3" parent="Spike" instance=ExtResource("6_e7wrs")]
-position = Vector2(96, 329)
-rotation = -1.5708
-
-[node name="Coins" type="Node2D" parent="."]
-
-[node name="Coin" parent="Coins" instance=ExtResource("7_6uurr")]
-position = Vector2(231, 216)
-
-[node name="Coin2" parent="Coins" instance=ExtResource("7_6uurr")]
-position = Vector2(247, 216)
-
-[node name="Coin3" parent="Coins" instance=ExtResource("7_6uurr")]
-position = Vector2(239, 204)
-
-[node name="Coin4" parent="Coins" instance=ExtResource("7_6uurr")]
-position = Vector2(378, 280)
-
-[node name="Coin5" parent="Coins" instance=ExtResource("7_6uurr")]
-position = Vector2(392, 280)
-
-[node name="Coin6" parent="Coins" instance=ExtResource("7_6uurr")]
-position = Vector2(406, 280)
-
-[node name="Coin7" parent="Coins" instance=ExtResource("7_6uurr")]
-position = Vector2(385, 268)
-
-[node name="Coin8" parent="Coins" instance=ExtResource("7_6uurr")]
-position = Vector2(399, 268)
-
 [node name="SaberTooth" parent="." instance=ExtResource("10_ecpo5")]
 position = Vector2(351, 97)
 
@@ -2511,6 +2475,40 @@ position = Vector2(308, 232)
 
 [node name="Canon" parent="." instance=ExtResource("16_4dunb")]
 position = Vector2(1307, 196)
+
+[node name="Spikes" parent="." instance=ExtResource("6_e7wrs")]
+position = Vector2(433, 272)
+
+[node name="Spikes2" parent="." instance=ExtResource("6_e7wrs")]
+position = Vector2(576, 304)
+
+[node name="Spikes3" parent="." instance=ExtResource("6_e7wrs")]
+position = Vector2(96, 329)
+rotation = -1.5708
+
+[node name="Coin" parent="." instance=ExtResource("7_6uurr")]
+position = Vector2(231, 216)
+
+[node name="Coin2" parent="." instance=ExtResource("7_6uurr")]
+position = Vector2(247, 216)
+
+[node name="Coin3" parent="." instance=ExtResource("7_6uurr")]
+position = Vector2(239, 204)
+
+[node name="Coin4" parent="." instance=ExtResource("7_6uurr")]
+position = Vector2(378, 280)
+
+[node name="Coin5" parent="." instance=ExtResource("7_6uurr")]
+position = Vector2(392, 280)
+
+[node name="Coin6" parent="." instance=ExtResource("7_6uurr")]
+position = Vector2(406, 280)
+
+[node name="Coin7" parent="." instance=ExtResource("7_6uurr")]
+position = Vector2(385, 268)
+
+[node name="Coin8" parent="." instance=ExtResource("7_6uurr")]
+position = Vector2(399, 268)
 
 [connection signal="pressed" from="UIManager/PauseMenu/VBoxContainer/HBoxContainer/Resume" to="UIManager" method="_on_resume_pressed"]
 [connection signal="pressed" from="UIManager/PauseMenu/VBoxContainer/HBoxContainer2/Restart" to="UIManager" method="_on_restart_pressed"]

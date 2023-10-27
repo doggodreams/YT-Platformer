@@ -18,6 +18,7 @@ var can_take_damage = true
 
 
 func _ready():
+	GameManager.damage_taken = 0
 	health = max_health
 	GameManager.player = self
 
@@ -80,6 +81,8 @@ func take_damage(damage_amount : int):
 		hit = true
 		attacking = false
 		animation.play("Hit")
+		
+		GameManager.damage_taken += 1
 		
 		health -= damage_amount
 		
