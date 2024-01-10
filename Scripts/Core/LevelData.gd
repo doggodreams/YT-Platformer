@@ -7,6 +7,8 @@ var level_dic = {
 		"max_score" : 0,
 		"coins" : 0,
 		"max_coins" : 0,
+		"enemies_beaten" : 0,
+		"max_enemies_beaten" : 0,
 		"damage_taken" : 0,
 		"unlocks" : "Level2",
 		"beaten" : false
@@ -21,6 +23,8 @@ func generate_level(level):
 			"max_score" : 0,
 			"coins" : 0,
 			"max_coins" : 0,
+			"enemies_beaten" : 0,
+			"max_enemies_beaten" : 0,
 			"damage_taken" : 0,
 			"unlocks" : generate_level_number(level),
 			"beaten" : false
@@ -34,10 +38,12 @@ func generate_level_number(level):
 	level_number = int(level_number) + 1
 	return "Level" + str(level_number)
 
-func update_level(level, score, max_score, coins, max_coins, damage_taken, beaten):
+func update_level(level, score, max_score, coins, max_coins, enemies_beaten, max_enemies_beaten, damage_taken, beaten):
 	level_dic[level]["score"] = score
 	level_dic[level]["max_score"] = max_score
 	level_dic[level]["coins"] = coins
 	level_dic[level]["max_coins"] = max_coins
+	level_dic[level]["enemies_beaten"] = enemies_beaten
+	level_dic[level]["max_enemies_beaten"] = max_enemies_beaten
 	level_dic[level]["damage_taken"] = damage_taken
 	level_dic[level]["beaten"] = beaten

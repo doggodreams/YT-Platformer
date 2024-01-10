@@ -42,6 +42,7 @@ func take_damage(damage_amount):
 		die()
 
 func die():
+	GameManager.enemies_beaten += 1
 	GameManager.score += score
 	var spawned_debris = debris.instantiate()
 	spawned_debris.global_position = position

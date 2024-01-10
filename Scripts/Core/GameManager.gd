@@ -3,7 +3,7 @@ extends Node
 signal gained_coins()
 signal level_beaten()
 
-var coins : int
+var coins : int = 0
 var score : int = 0
 
 var current_checkpoint : Checkpoint
@@ -13,6 +13,8 @@ var score_label
 
 var player : Player
 var damage_taken = 0
+
+var enemies_beaten = 0
 
 var paused = false
 

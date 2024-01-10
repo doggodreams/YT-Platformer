@@ -61,6 +61,28 @@ func _process(delta):
 			
 			await get_tree().create_timer(delta).timeout
 		player.position = target_level.global_position
+		show_stats(target_level)
 		curr_level = target_level
 		player.get_node("AnimationPlayer").play("Idle")
 		completed_movement = true
+
+func show_stats(target_level):
+	if LevelData.level_dic[target_level.name]["unlocked"]:
+		target_level.get_node("StatDisplay").visible = true
+		target_level.get_node("StatDisplay").get_node("AnimationPlayer").play("Show")
+	curr_level.get_node("StatDisplay").get_node("AnimationPlayer").play("Show", 0, -1.0, true)
+	
+	if LevelData.level_dic[target_level.name]["coins"] == LevelData.level_dic[target_level.name]["max_coins"] and LevelData.level_dic[target_level.name]["score"] > 0:
+		target_level.get_node("StatDisplay").get_node("CoinSprite").visible = true
+	else:
+		target_level.get_node("StatDisplay").get_node("CoinSprite").visible = false
+	
+	if LevelData.level_dic[target_level.name]["enemies_beaten"] == LevelData.level_dic[target_level.name]["max_enemies_beaten"] and LevelData.level_dic[target_level.name]["score"] > 0:
+		target_level.get_node("StatDisplay").get_node("SkullSprite").visible = true
+	else:
+		target_level.get_node("StatDisplay").get_node("SkullSprite").visible = false
+	
+	if LevelData.level_dic[target_level.name]["damage_taken"] == 0 and LevelData.level_dic[target_level.name]["score"] > 0:
+		target_level.get_node("StatDisplay").get_node("HealthSprite").visible = true
+	else:
+		target_level.get_node("StatDisplay").get_node("HealthSprite").visible = false
