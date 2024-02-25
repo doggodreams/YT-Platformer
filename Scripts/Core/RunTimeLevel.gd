@@ -29,3 +29,4 @@ func beat_level():
 	LevelData.level_dic[LevelData.level_dic[level_name]["unlocks"]]["unlocked"] = true
 	
 	LevelData.update_level(level_name, GameManager.score, max_score, GameManager.coins, max_coins, GameManager.enemies_beaten, max_enemies, GameManager.damage_taken, true)
+	SaveManager.save_game()

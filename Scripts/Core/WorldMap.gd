@@ -12,9 +12,15 @@ var completed_movement = true
 var lerp_threshold = 0.1
 
 func _ready():
+	SaveManager.load_game()
 	player.get_node("AnimationPlayer").play("Idle")
 	levels = level_holder.get_children()
 	update_levels()
+	
+	var coins : int
+	for level in SaveManager.save_data.level_dic:
+		coins += SaveManager.save_data.level_dic[level]["coins"]
+		print(coins)
 
 func update_levels():
 	for level in levels:

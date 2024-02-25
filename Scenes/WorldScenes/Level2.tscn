@@ -1,3 +1,173 @@
-[gd_scene format=3 uid="uid://b77bb2ihhacbm"]
+[gd_scene load_steps=8 format=3 uid="uid://b77bb2ihhacbm"]
+
+[ext_resource type="Script" path="res://Scripts/Core/RunTimeLevel.gd" id="1_5gchj"]
+[ext_resource type="Texture2D" uid="uid://cym5u1f0nctbl" path="res://Imports/Sprites/EpisodeFour/Spritesheet/BG Image.png" id="1_v73aw"]
+[ext_resource type="Script" path="res://Scripts/UI/UIManager.gd" id="2_ekfui"]
+[ext_resource type="Texture2D" uid="uid://dn52e3sicx4vq" path="res://Imports/Sprites/EpisodeFour/Coin/01.png" id="3_rasou"]
+[ext_resource type="TileSet" uid="uid://cx6go5lsbyub6" path="res://Imports/Tilemaps/Tilemap.tres" id="4_0ox2e"]
+[ext_resource type="PackedScene" uid="uid://c0lrsxqxorx51" path="res://Scenes/Interactable/checkpoint.tscn" id="5_8mh75"]
+[ext_resource type="PackedScene" uid="uid://c6krylhn5lg3x" path="res://Scenes/Entities/player.tscn" id="6_mwomn"]
 
 [node name="Level2" type="Node2D"]
+script = ExtResource("1_5gchj")
+
+[node name="Background" type="TextureRect" parent="."]
+z_index = -2
+offset_left = -544.0
+offset_top = -126.0
+offset_right = 1159.0
+offset_bottom = 776.0
+texture = ExtResource("1_v73aw")
+
+[node name="Background2" type="TextureRect" parent="."]
+z_index = -2
+offset_left = 1159.0
+offset_top = -126.0
+offset_right = 2862.0
+offset_bottom = 776.0
+texture = ExtResource("1_v73aw")
+
+[node name="UIManager" type="CanvasLayer" parent="."]
+process_mode = 3
+script = ExtResource("2_ekfui")
+
+[node name="CoinIcon" type="TextureRect" parent="UIManager"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("3_rasou")
+
+[node name="CoinDisplay" type="Label" parent="UIManager"]
+offset_left = 38.0
+offset_top = 7.0
+offset_right = 78.0
+offset_bottom = 44.0
+theme_override_colors/font_color = Color(0.199219, 0.195313, 0.238281, 1)
+theme_override_font_sizes/font_size = 20
+text = "0"
+
+[node name="PauseMenu" type="ColorRect" parent="UIManager"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -80.0
+offset_right = 60.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.286275, 0.286275, 0.431373, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UIManager/PauseMenu"]
+layout_mode = 0
+offset_top = 10.0
+offset_right = 120.0
+offset_bottom = 150.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UIManager/PauseMenu/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Resume" type="Button" parent="UIManager/PauseMenu/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 2
+text = "Resume"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UIManager/PauseMenu/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Restart" type="Button" parent="UIManager/PauseMenu/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 2
+text = "Restart"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="UIManager/PauseMenu/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="WorldMap" type="Button" parent="UIManager/PauseMenu/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 2
+text = "World Map"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="UIManager/PauseMenu/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Quit" type="Button" parent="UIManager/PauseMenu/VBoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 2
+text = "Quit"
+
+[node name="WinScreen" type="ColorRect" parent="UIManager"]
+visible = false
+custom_minimum_size = Vector2(240, 120)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -60.0
+offset_right = 120.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.286275, 0.286275, 0.431373, 1)
+
+[node name="Label" type="Label" parent="UIManager/WinScreen"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -42.0
+offset_right = 42.0
+offset_bottom = 26.0
+grow_horizontal = 2
+text = "Score:1300"
+
+[node name="Restart" type="Button" parent="UIManager/WinScreen"]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 0
+offset_left = 4.0
+offset_top = 85.0
+offset_right = 69.0
+offset_bottom = 116.0
+text = "Restart
+"
+
+[node name="FinnishLevel" type="Button" parent="UIManager/WinScreen"]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 0
+offset_left = 166.0
+offset_top = 85.0
+offset_right = 236.0
+offset_bottom = 116.0
+text = "Resume
+"
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("4_0ox2e")
+format = 2
+layer_0/tile_data = PackedInt32Array(1048575, 0, 0, 1114111, 0, 1, 1179647, 0, 2, 1245183, 0, 3, 1310719, 0, 4, 1376255, 0, 5, 983040, 65536, 0, 1048576, 65536, 1, 1114112, 65536, 2, 1179648, 65536, 3, 1245184, 65536, 4, 1310720, 65536, 5, 983041, 131072, 0, 1048577, 131072, 1, 1114113, 131072, 2, 1179649, 131072, 3, 1245185, 131072, 4, 1310721, 131072, 5, 983042, 196608, 0, 1048578, 196608, 1, 1114114, 196608, 2, 1179650, 196608, 3, 1245186, 196608, 4, 1310722, 196608, 5, 983043, 262144, 0, 1048579, 262144, 1, 1114115, 262144, 2, 1179651, 262144, 3, 1245187, 262144, 4, 1310723, 262144, 5, 983044, 327680, 0, 1048580, 327680, 1, 1114116, 327680, 2, 1179652, 327680, 3, 1245188, 327680, 4, 1310724, 327680, 5, 851975, 524288, 0, 917511, 524288, 1, 983047, 524288, 2, 1048583, 524288, 3, 1114119, 524288, 4, 1179655, 524288, 5, 851976, 589824, 0, 917512, 589824, 1, 983048, 589824, 2, 1048584, 589824, 3, 1114120, 589824, 4, 1179656, 589824, 5)
+
+[node name="Player" parent="." instance=ExtResource("6_mwomn")]
+position = Vector2(31, 112)
+
+[node name="Checkpoint" parent="." instance=ExtResource("5_8mh75")]
+position = Vector2(32, 194)
+spawnpoint = true
+
+[node name="Checkpoint2" parent="." instance=ExtResource("5_8mh75")]
+position = Vector2(137, 162)
+win_condition = true
+
+[connection signal="pressed" from="UIManager/PauseMenu/VBoxContainer/HBoxContainer/Resume" to="UIManager" method="_on_resume_pressed"]
+[connection signal="pressed" from="UIManager/PauseMenu/VBoxContainer/HBoxContainer2/Restart" to="UIManager" method="_on_restart_pressed"]
+[connection signal="pressed" from="UIManager/PauseMenu/VBoxContainer/HBoxContainer3/WorldMap" to="UIManager" method="_on_world_map_pressed"]
+[connection signal="pressed" from="UIManager/PauseMenu/VBoxContainer/HBoxContainer4/Quit" to="UIManager" method="_on_quit_pressed"]
+[connection signal="pressed" from="UIManager/WinScreen/Restart" to="UIManager" method="_on_restart_pressed"]
+[connection signal="pressed" from="UIManager/WinScreen/FinnishLevel" to="UIManager" method="_on_finnish_level_pressed"]
