@@ -17,6 +17,8 @@ var health
 var hit = false
 var can_attack = true
 
+@export var knockback_force = 100.0  # Knockback force when hit (horizontal only)
+var knockback_velocity = 0.0  # Velocity for knockback
 
 func _ready():
 	health = max_health
@@ -25,11 +27,16 @@ func _ready():
 func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y += gravity * delta
-	
-	if !$RayCast2D.is_colliding() && is_on_floor():
+
+	if !$RayCast2D.is_colliding() and is_on_floor():
 		flip()
-	
-	velocity.x = speed
+
+	if hit:  # Apply knockback effect
+		velocity.x = knockback_velocity
+		knockback_velocity = lerp(knockback_velocity, 0.0, 5.0 * delta)  # Smoothly reduce knockback
+	else:
+		velocity.x = speed  # Ensure the enemy keeps moving after knockback
+
 	move_and_slide()
 
 func flip():
@@ -42,31 +49,46 @@ func flip():
 		speed = abs(speed) * -1
 
 func _on_hitbox_area_entered(area):
-	if area.get_parent() is Player && !dead && can_attack:
+	if area.get_parent() is Player and !dead and can_attack:
 		area.get_parent().take_damage(1)
 
 func take_damage(damage_amount):
-	if !dead:
+	if not dead:
 		$AnimationPlayer.play("Hit")
 		
 		health -= damage_amount
 		
 		get_node("Healthbar").update_healthbar(health, max_health)
-		
+
 		if health <= 0:
 			die()
 
-func get_hit():
-	hit = !hit
-	
-	if hit:
-		current_speed = speed
-		speed = 0
-		can_attack = false
+func get_hit(attacker: Node):
+	hit = true  # Set hit to true when hit
+	current_speed = speed
+	speed = 0
+	can_attack = false
+
+	# Determine direction based on the attacker's position
+	if attacker.global_position.x > global_position.x:
+		knockback_velocity = -knockback_force  # Knockback to the left
 	else:
-		speed = current_speed
-		can_attack = true
-		$AnimationPlayer.play("Run")
+		knockback_velocity = knockback_force  # Knockback to the right
+
+	# Use a timer to control the duration of the knockback effect
+	var timer = Timer.new()
+	timer.one_shot = true
+	timer.wait_time = 0.3  # Duration of knockback
+	timer.connect("timeout", Callable(self, "_end_knockback"))  # Use Callable here
+	add_child(timer)
+	timer.start()
+
+
+func _end_knockback():
+	hit = false  # Reset the hit state
+	speed = current_speed  # Restore the original speed
+	can_attack = true
+	$AnimationPlayer.play("Run")  # Resume running animation
 
 func die():
 	GameManager.enemies_beaten += 1

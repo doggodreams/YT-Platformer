@@ -1,0 +1,173 @@
+[gd_scene load_steps=8 format=3 uid="uid://owroypniengc"]
+
+[ext_resource type="Texture2D" uid="uid://cym5u1f0nctbl" path="res://Imports/Sprites/EpisodeFour/Spritesheet/BG Image.png" id="1_7tnqt"]
+[ext_resource type="Script" path="res://Scripts/Core/RunTimeLevel.gd" id="1_v3iaa"]
+[ext_resource type="Script" path="res://Scripts/UI/UIManager.gd" id="2_2gero"]
+[ext_resource type="Texture2D" uid="uid://dn52e3sicx4vq" path="res://Imports/Sprites/EpisodeFour/Coin/01.png" id="3_35eac"]
+[ext_resource type="TileSet" uid="uid://cx6go5lsbyub6" path="res://Imports/Tilemaps/Tilemap.tres" id="4_115rb"]
+[ext_resource type="PackedScene" uid="uid://c6krylhn5lg3x" path="res://Scenes/Entities/player.tscn" id="4_mlxoo"]
+[ext_resource type="PackedScene" uid="uid://c0lrsxqxorx51" path="res://Scenes/Interactable/checkpoint.tscn" id="5_g3apv"]
+
+[node name="Level3" type="Node2D"]
+script = ExtResource("1_v3iaa")
+
+[node name="Background" type="TextureRect" parent="."]
+z_index = -2
+offset_left = -544.0
+offset_top = -126.0
+offset_right = 1159.0
+offset_bottom = 776.0
+texture = ExtResource("1_7tnqt")
+
+[node name="Background2" type="TextureRect" parent="."]
+z_index = -2
+offset_left = 1159.0
+offset_top = -126.0
+offset_right = 2862.0
+offset_bottom = 776.0
+texture = ExtResource("1_7tnqt")
+
+[node name="UIManager" type="CanvasLayer" parent="."]
+process_mode = 3
+script = ExtResource("2_2gero")
+
+[node name="CoinIcon" type="TextureRect" parent="UIManager"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("3_35eac")
+
+[node name="CoinDisplay" type="Label" parent="UIManager"]
+offset_left = 38.0
+offset_top = 7.0
+offset_right = 78.0
+offset_bottom = 44.0
+theme_override_colors/font_color = Color(0.199219, 0.195313, 0.238281, 1)
+theme_override_font_sizes/font_size = 20
+text = "0"
+
+[node name="PauseMenu" type="ColorRect" parent="UIManager"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -80.0
+offset_right = 60.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.286275, 0.286275, 0.431373, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UIManager/PauseMenu"]
+layout_mode = 0
+offset_top = 10.0
+offset_right = 120.0
+offset_bottom = 150.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UIManager/PauseMenu/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Resume" type="Button" parent="UIManager/PauseMenu/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 2
+text = "Resume"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UIManager/PauseMenu/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Restart" type="Button" parent="UIManager/PauseMenu/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 2
+text = "Restart"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="UIManager/PauseMenu/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="WorldMap" type="Button" parent="UIManager/PauseMenu/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 2
+text = "World Map"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="UIManager/PauseMenu/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Quit" type="Button" parent="UIManager/PauseMenu/VBoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 2
+text = "Quit"
+
+[node name="WinScreen" type="ColorRect" parent="UIManager"]
+visible = false
+custom_minimum_size = Vector2(240, 120)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -60.0
+offset_right = 120.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.286275, 0.286275, 0.431373, 1)
+
+[node name="Label" type="Label" parent="UIManager/WinScreen"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -42.0
+offset_right = 42.0
+offset_bottom = 26.0
+grow_horizontal = 2
+text = "Score:1300"
+
+[node name="Restart" type="Button" parent="UIManager/WinScreen"]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 0
+offset_left = 4.0
+offset_top = 85.0
+offset_right = 69.0
+offset_bottom = 116.0
+text = "Restart
+"
+
+[node name="FinnishLevel" type="Button" parent="UIManager/WinScreen"]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 0
+offset_left = 166.0
+offset_top = 85.0
+offset_right = 236.0
+offset_bottom = 116.0
+text = "Resume
+"
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("4_115rb")
+format = 2
+layer_0/tile_data = PackedInt32Array(1048573, 0, 8, 1114109, 0, 9, 1048574, 65536, 8, 1114110, 65536, 9, 1048575, 131072, 8, 1114111, 131072, 9, 983040, 196608, 8, 1048576, 196608, 9, 983041, 262144, 8, 1048577, 262144, 9, 983042, 327680, 8, 1048578, 327680, 9, 1048582, 0, 8, 1114118, 0, 9, 1048583, 65536, 8, 1114119, 65536, 9, 1048584, 131072, 8, 1114120, 131072, 9, 1048585, 196608, 8, 1114121, 196608, 9, 1048586, 262144, 8, 1114122, 262144, 9, 1048587, 327680, 8, 1114123, 327680, 9, 917520, 0, 8, 983056, 0, 9, 917521, 65536, 8, 983057, 65536, 9, 917522, 131072, 8, 983058, 131072, 9, 917523, 196608, 8, 983059, 196608, 9, 917524, 262144, 8, 983060, 262144, 9, 917525, 327680, 8, 983061, 327680, 9, 655341, 2, 5, 524270, 65538, 3, 589806, 65538, 4, 655342, 65538, 5, 524271, 131074, 3, 589807, 131074, 4, 655343, 131074, 5, 524272, 196610, 3, 589808, 196610, 4, 655344, 196610, 5, 524273, 262146, 3, 589809, 262146, 4, 655345, 262146, 5, 589810, 327682, 4, 655346, 327682, 5, 589811, 393218, 4, 655347, 393218, 5, 655348, 458754, 5, 655349, 524290, 5, 262162, 2, 5, 131091, 65538, 3, 196627, 65538, 4, 262163, 65538, 5, 131092, 131074, 3, 196628, 131074, 4, 262164, 131074, 5, 131093, 196610, 3, 196629, 196610, 4, 262165, 196610, 5, 131094, 262146, 3, 196630, 262146, 4, 262166, 262146, 5, 196631, 327682, 4, 262167, 327682, 5, 196632, 393218, 4, 262168, 393218, 5, 262169, 458754, 5, 262170, 524290, 5)
+
+[node name="Player" parent="." instance=ExtResource("4_mlxoo")]
+position = Vector2(31, 112)
+
+[node name="Checkpoint" parent="." instance=ExtResource("5_g3apv")]
+position = Vector2(32, 194)
+spawnpoint = true
+
+[node name="Checkpoint2" parent="." instance=ExtResource("5_g3apv")]
+position = Vector2(307, 178)
+win_condition = true
+
+[connection signal="pressed" from="UIManager/PauseMenu/VBoxContainer/HBoxContainer/Resume" to="UIManager" method="_on_resume_pressed"]
+[connection signal="pressed" from="UIManager/PauseMenu/VBoxContainer/HBoxContainer2/Restart" to="UIManager" method="_on_restart_pressed"]
+[connection signal="pressed" from="UIManager/PauseMenu/VBoxContainer/HBoxContainer3/WorldMap" to="UIManager" method="_on_world_map_pressed"]
+[connection signal="pressed" from="UIManager/PauseMenu/VBoxContainer/HBoxContainer4/Quit" to="UIManager" method="_on_quit_pressed"]
+[connection signal="pressed" from="UIManager/WinScreen/Restart" to="UIManager" method="_on_restart_pressed"]
+[connection signal="pressed" from="UIManager/WinScreen/FinnishLevel" to="UIManager" method="_on_finnish_level_pressed"]

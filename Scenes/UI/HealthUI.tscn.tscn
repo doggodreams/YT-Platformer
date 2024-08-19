@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://dkotqqol4w7f"]
+
+[ext_resource type="Texture2D" uid="uid://ckp6ee6jdxp7l" path="res://Imports/Sprites/EpisodeNine/Heart.png" id="2_yxc4d"]
+
+[node name="HealthUI" type="Node2D"]
+
+[node name="HealthUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Heart1" type="TextureRect" parent="HealthUI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_yxc4d")
+
+[node name="Heart2" type="TextureRect" parent="HealthUI"]
+layout_mode = 0
+offset_left = 27.0
+offset_right = 67.0
+offset_bottom = 40.0
+texture = ExtResource("2_yxc4d")

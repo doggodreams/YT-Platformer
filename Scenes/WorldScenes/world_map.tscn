@@ -322,10 +322,11 @@ libraries = {
 "": SubResource("AnimationLibrary_krpty")
 }
 
-[node name="Level3" type="Node2D" parent="LevelHolder" node_paths=PackedStringArray("up")]
+[node name="Level3" type="Node2D" parent="LevelHolder" node_paths=PackedStringArray("up", "left")]
 position = Vector2(-125, 113)
 script = ExtResource("3_apldq")
-up = NodePath("../Level1")
+up = NodePath("../Level4")
+left = NodePath("../Level2")
 
 [node name="Sprite2D" type="Sprite2D" parent="LevelHolder/Level3"]
 scale = Vector2(3, 3)
@@ -350,6 +351,38 @@ scale = Vector2(3, 3)
 texture = ExtResource("7_tv4tb")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="LevelHolder/Level3/StatDisplay"]
+libraries = {
+"": SubResource("AnimationLibrary_krpty")
+}
+
+[node name="Level4" type="Node2D" parent="LevelHolder" node_paths=PackedStringArray("down")]
+position = Vector2(-125, 17)
+script = ExtResource("3_apldq")
+down = NodePath("../Level3")
+
+[node name="Sprite2D" type="Sprite2D" parent="LevelHolder/Level4"]
+scale = Vector2(3, 3)
+texture = ExtResource("3_frjcs")
+
+[node name="StatDisplay" type="Node2D" parent="LevelHolder/Level4"]
+visible = false
+
+[node name="CoinSprite" type="Sprite2D" parent="LevelHolder/Level4/StatDisplay"]
+position = Vector2(-36, -39)
+scale = Vector2(3, 3)
+texture = ExtResource("5_ygnaw")
+
+[node name="SkullSprite" type="Sprite2D" parent="LevelHolder/Level4/StatDisplay"]
+position = Vector2(0, -51)
+scale = Vector2(3, 3)
+texture = ExtResource("6_bkwu2")
+
+[node name="HealthSprite" type="Sprite2D" parent="LevelHolder/Level4/StatDisplay"]
+position = Vector2(36, -39)
+scale = Vector2(3, 3)
+texture = ExtResource("7_tv4tb")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="LevelHolder/Level4/StatDisplay"]
 libraries = {
 "": SubResource("AnimationLibrary_krpty")
 }

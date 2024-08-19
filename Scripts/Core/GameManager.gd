@@ -5,19 +5,18 @@ signal level_beaten()
 
 var coins : int = 0
 var score : int = 0
-
 var current_checkpoint : Checkpoint
 var pause_menu
 var win_screen
 var score_label
-
 var player : Player
 var damage_taken = 0
-
 var enemies_beaten = 0
-
 var paused = false
 
+func _ready():
+	# Ensure there's no health UI connection or signal handling here
+	pass
 
 func respawn_player():
 	player.health = player.max_health
@@ -31,12 +30,10 @@ func gain_coins(coins_gained : int):
 func win():
 	emit_signal("level_beaten")
 	win_screen.visible = true
-	
-	score_label.text = "score:" + str(score)
+	score_label.text = "score: " + str(score)
 
 func pause_play():
 	paused = !paused
-	
 	pause_menu.visible = paused
 
 func resume():
