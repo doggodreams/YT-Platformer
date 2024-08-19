@@ -1,14 +1,14 @@
 [gd_resource type="Resource" script_class="SaveData" load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://Scripts/Core/SaveData.gd" id="1_m8tk8"]
+[ext_resource type="Script" path="res://Scripts/Core/SaveData.gd" id="1_we5t3"]
 
 [resource]
-script = ExtResource("1_m8tk8")
+script = ExtResource("1_we5t3")
 level_dic = {
 "Level1": {
 "beaten": true,
 "coins": 3,
-"damage_taken": 1,
+"damage_taken": 2,
 "enemies_beaten": 1,
 "max_coins": 8,
 "max_enemies_beaten": 3,

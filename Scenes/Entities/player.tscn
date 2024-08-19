@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://c6krylhn5lg3x"]
+[gd_scene load_steps=36 format=3 uid="uid://c6krylhn5lg3x"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_33aw1"]
 [ext_resource type="Texture2D" uid="uid://cfn68x1o7kr2v" path="res://Imports/Sprites/EpisodeOne/09-Idle Sword/Idle Sword 01.png" id="2_0j7ia"]
@@ -23,6 +23,8 @@
 [ext_resource type="Texture2D" uid="uid://c4b1fe6trhra3" path="res://Imports/Sprites/EpisodeTwo/14-Hit Sword/Hit Sword 02.png" id="21_3245y"]
 [ext_resource type="Texture2D" uid="uid://bdydrtbyuxqa" path="res://Imports/Sprites/EpisodeTwo/14-Hit Sword/Hit Sword 03.png" id="22_563mq"]
 [ext_resource type="Texture2D" uid="uid://m3apd7wctxi3" path="res://Imports/Sprites/EpisodeTwo/14-Hit Sword/Hit Sword 04.png" id="23_t3g76"]
+[ext_resource type="Texture2D" uid="uid://b8cxj1xhwjo5c" path="res://Imports/Sprites/Nature.png" id="24_ywxsh"]
+[ext_resource type="Texture2D" uid="uid://dnd5eixa6o7yn" path="res://Imports/Sprites/Fire.png" id="25_chvg2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aldid"]
 size = Vector2(14, 19)
@@ -169,7 +171,7 @@ _data = {
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_33aw1")
-jump_height = 100.0
+jump_height = 50.0
 
 [node name="Hitbox" type="Area2D" parent="."]
 monitoring = false
@@ -190,7 +192,7 @@ position = Vector2(0, -1)
 shape = SubResource("CapsuleShape2D_uudk6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("8_fhb6i")
+texture = ExtResource("17_r5bne")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 process_callback = 0
@@ -209,3 +211,21 @@ drag_bottom_margin = 0.1
 libraries = {
 "": SubResource("AnimationLibrary_uhjgh")
 }
+
+[node name="LeftRayCast" type="RayCast2D" parent="."]
+target_position = Vector2(-10, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="LeftRayCast"]
+visible = false
+position = Vector2(13, 4)
+scale = Vector2(0.34375, 0.3125)
+texture = ExtResource("24_ywxsh")
+
+[node name="RightRayCast" type="RayCast2D" parent="."]
+target_position = Vector2(10, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="RightRayCast"]
+visible = false
+position = Vector2(-14, 4)
+scale = Vector2(0.34375, 0.34375)
+texture = ExtResource("25_chvg2")
