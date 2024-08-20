@@ -4,9 +4,10 @@ class_name Player
 @onready var animation = $AnimationPlayer
 @onready var sprite = $Sprite2D
 
-
-@export var move_speed = 200.0  # New movement speed for horizontal movement
-
+@export var move_speed = 200.0
+@export var dash_speed = 400.0
+@export var dash_time = 0.2
+@export var double_jump_allowed = true
 @export var attacking = false
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -22,14 +23,22 @@ const wall_jump_pushback = 200
 const wall_slide_gravity = 100
 
 var is_wall_sliding = false
-
+var has_double_jumped = false
+var is_dashing = false
+var dash_timer = 0.0
 
 const jump_height : float = 100
 const jump_time_to_peak : float = 0.5
 const jump_time_to_descent : float = 0.5
 
+# Modified double jump settings
+const double_jump_height : float = 5  # Higher jump height for a bursty feel
+const double_jump_time_to_peak : float = 0.02  # Shorter time to peak for a bursty feel
+
 @onready var jump_velocity : float = ((2.0 * jump_height) / jump_time_to_peak) * -1.0
+@onready var double_jump_velocity : float = ((2.0 * double_jump_height) / double_jump_time_to_peak) * -1.0
 @onready var jump_gravity : float = ((-2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)) * -1.0
+@onready var double_jump_gravity : float = ((-2.0 * double_jump_height) / (double_jump_time_to_peak * double_jump_time_to_peak)) * -1.0
 @onready var fall_gravity : float = ((-2.0 * jump_height) / (jump_time_to_descent * jump_time_to_descent)) * -1.0
 
 func _ready():
@@ -42,10 +51,17 @@ func _process(_delta):
 		attack()
 
 func _physics_process(delta):
+	if is_dashing:
+		dash_timer -= delta
+		if dash_timer <= 0.0:
+			is_dashing = false
+		move_and_slide()
+		return
+	
 	velocity.x = get_input_velocity() * move_speed
 	
-	
 	jump(delta)
+	dash(delta)
 	
 	move_and_slide()
 	wall_slide(delta)
@@ -62,13 +78,28 @@ func jump(delta):
 	if Input.is_action_just_pressed("jump"):
 		if is_on_floor():
 			velocity.y = jump_velocity
-		if is_on_wall() and Input.is_action_pressed("right"):
+			has_double_jumped = false
+		elif double_jump_allowed and not has_double_jumped:
+			velocity.y = double_jump_velocity  # Use the bursty double jump velocity
+			has_double_jumped = true
+		elif is_on_wall() and Input.is_action_pressed("right"):
 			velocity.y = jump_velocity
 			velocity.x = -wall_jump_pushback
-		if is_on_wall() and Input.is_action_pressed("left"):
+			has_double_jumped = false
+		elif is_on_wall() and Input.is_action_pressed("left"):
 			velocity.y = jump_velocity
 			velocity.x = wall_jump_pushback
-			
+			has_double_jumped = false
+
+func dash(delta):
+	if Input.is_action_just_pressed("dash") and not is_dashing:
+		is_dashing = true
+		dash_timer = dash_time
+		if Input.is_action_pressed("right"):
+			velocity.x = dash_speed
+		elif Input.is_action_pressed("left"):
+			velocity.x = -dash_speed
+
 func wall_slide(delta):
 	if is_on_wall() and !is_on_floor():
 		if Input.is_action_pressed("left") or Input.is_action_pressed("right"):
@@ -81,7 +112,7 @@ func wall_slide(delta):
 	if is_wall_sliding:
 		velocity.y += (wall_slide_gravity * delta)
 		velocity.y = min(velocity.y, wall_slide_gravity)		
-		
+
 func get_input_velocity() -> float:
 	var horizontal := 0.0
 	
