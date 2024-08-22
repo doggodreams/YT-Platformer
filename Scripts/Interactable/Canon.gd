@@ -20,6 +20,9 @@ func _ready():
 	shooting = true
 	shoot()
 
+func get_hit(attacker: Node):
+	pass
+
 func shoot():
 	while shooting:
 		animation_player.play("Fire")

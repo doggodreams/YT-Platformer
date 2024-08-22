@@ -79,7 +79,7 @@ func get_hit(attacker: Node):
 	var timer = Timer.new()
 	timer.one_shot = true
 	timer.wait_time = 0.3  # Duration of knockback
-	timer.connect("timeout", Callable(self, "_end_knockback"))  # Use Callable here
+	timer.connect("timeout", _end_knockback)
 	add_child(timer)
 	timer.start()
 

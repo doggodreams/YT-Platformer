@@ -5,9 +5,6 @@ class_name Player
 @onready var sprite = $Sprite2D
 
 @export var move_speed = 200.0
-@export var dash_speed = 400.0
-@export var dash_time = 0.2
-@export var double_jump_allowed = true
 @export var attacking = false
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -20,25 +17,21 @@ var can_take_damage = true
 var movement_velocity := Vector2.ZERO
 
 const wall_jump_pushback = 200
-const wall_slide_gravity = 100
+const wall_slide_gravity = 50
 
 var is_wall_sliding = false
-var has_double_jumped = false
+var jump_count = 0
 var is_dashing = false
-var dash_timer = 0.0
+var dash_speed = 2.5
 
-const jump_height : float = 100
+const jump_height : float = 65
 const jump_time_to_peak : float = 0.5
-const jump_time_to_descent : float = 0.5
+const jump_time_to_descent : float = .35
 
-# Modified double jump settings
-const double_jump_height : float = 5  # Higher jump height for a bursty feel
-const double_jump_time_to_peak : float = 0.02  # Shorter time to peak for a bursty feel
+
 
 @onready var jump_velocity : float = ((2.0 * jump_height) / jump_time_to_peak) * -1.0
-@onready var double_jump_velocity : float = ((2.0 * double_jump_height) / double_jump_time_to_peak) * -1.0
 @onready var jump_gravity : float = ((-2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)) * -1.0
-@onready var double_jump_gravity : float = ((-2.0 * double_jump_height) / (double_jump_time_to_peak * double_jump_time_to_peak)) * -1.0
 @onready var fall_gravity : float = ((-2.0 * jump_height) / (jump_time_to_descent * jump_time_to_descent)) * -1.0
 
 func _ready():
@@ -51,17 +44,10 @@ func _process(_delta):
 		attack()
 
 func _physics_process(delta):
-	if is_dashing:
-		dash_timer -= delta
-		if dash_timer <= 0.0:
-			is_dashing = false
-		move_and_slide()
-		return
-	
+		
 	velocity.x = get_input_velocity() * move_speed
 	
 	jump(delta)
-	dash(delta)
 	
 	move_and_slide()
 	wall_slide(delta)
@@ -76,29 +62,37 @@ func get_gravity() -> float:
 func jump(delta):
 	velocity.y += get_gravity() * delta
 	if Input.is_action_just_pressed("jump"):
-		if is_on_floor():
+		if is_on_floor_only():
 			velocity.y = jump_velocity
-			has_double_jumped = false
-		elif double_jump_allowed and not has_double_jumped:
-			velocity.y = double_jump_velocity  # Use the bursty double jump velocity
-			has_double_jumped = true
+			jump_count = 1
 		elif is_on_wall() and Input.is_action_pressed("right"):
 			velocity.y = jump_velocity
 			velocity.x = -wall_jump_pushback
-			has_double_jumped = false
+			jump_count = 1
 		elif is_on_wall() and Input.is_action_pressed("left"):
 			velocity.y = jump_velocity
 			velocity.x = wall_jump_pushback
-			has_double_jumped = false
+			jump_count = 1
+		elif !is_on_wall() and !is_on_floor() and jump_count == 1: #Double jump
+			if !is_dashing:
+				start_dash()
+				velocity.y = jump_velocity * dash_speed
+			else:
+				velocity.y = jump_velocity
+			
+			jump_count = 0
+			
 
-func dash(delta):
-	if Input.is_action_just_pressed("dash") and not is_dashing:
-		is_dashing = true
-		dash_timer = dash_time
-		if Input.is_action_pressed("right"):
-			velocity.x = dash_speed
-		elif Input.is_action_pressed("left"):
-			velocity.x = -dash_speed
+func start_dash():
+	is_dashing = true
+	$DashTimer.connect("timeout", stop_dash)
+	$DashTimer.start()
+	$DashParticles.emitting = true
+	
+func stop_dash():
+	velocity.y = 0
+	is_dashing = false
+	$DashParticles.emitting = false
 
 func wall_slide(delta):
 	if is_on_wall() and !is_on_floor():
@@ -111,7 +105,7 @@ func wall_slide(delta):
 	
 	if is_wall_sliding:
 		velocity.y += (wall_slide_gravity * delta)
-		velocity.y = min(velocity.y, wall_slide_gravity)		
+		velocity.y = min(velocity.y, wall_slide_gravity)
 
 func get_input_velocity() -> float:
 	var horizontal := 0.0
@@ -120,11 +114,14 @@ func get_input_velocity() -> float:
 		horizontal -= 1.0
 		sprite.scale.x = abs(sprite.scale.x) * -1
 		$AttackArea.scale.x = abs($AttackArea.scale.x) * -1
-	if Input.is_action_pressed("right"):
+		$DashParticles.gravity.x = 2000
+	elif Input.is_action_pressed("right"):  # Changed from 'if' to 'elif'
 		horizontal += 1.0
 		sprite.scale.x = abs(sprite.scale.x)
 		$AttackArea.scale.x = abs($AttackArea.scale.x)
-	
+		$DashParticles.gravity.x = -2000
+
+	# Ensure that a float is always returned
 	return horizontal
 
 func attack():
@@ -133,7 +130,7 @@ func attack():
 	for area in overlapping_objects:
 		if area.get_parent().is_in_group("Enemies"):
 			area.get_parent().take_damage(1)
-			area.get_parent().get_hit(self)  # Pass the player as the attacker
+			area.get_parent().get_hit(self) # Pass the player as the attacker
 	
 	attacking = true
 	animation.play("Attack")

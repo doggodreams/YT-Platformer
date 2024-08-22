@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bnn5auppa73q5"]
+[gd_scene load_steps=16 format=3 uid="uid://bnn5auppa73q5"]
 
 [ext_resource type="Texture2D" uid="uid://cym5u1f0nctbl" path="res://Imports/Sprites/EpisodeFour/Spritesheet/BG Image.png" id="1_awxur"]
 [ext_resource type="PackedScene" uid="uid://c6krylhn5lg3x" path="res://Scenes/Entities/player.tscn" id="1_lye1r"]
@@ -11,7 +11,6 @@
 [ext_resource type="Script" path="res://Scripts/UI/UIManager.gd" id="8_qm0j3"]
 [ext_resource type="PackedScene" uid="uid://hcr6ccmaap4r" path="res://Scenes/Entities/saber_tooth.tscn" id="10_ecpo5"]
 [ext_resource type="PackedScene" uid="uid://7qwhguwvqfnx" path="res://Scenes/Interactable/falling_spikes.tscn" id="11_83vui"]
-[ext_resource type="PackedScene" uid="uid://2rvtv0vcgf17" path="res://Scenes/Interactable/jump_pad.tscn" id="12_v81br"]
 [ext_resource type="PackedScene" uid="uid://cwc3h5t48drki" path="res://Scenes/Interactable/health_up.tscn" id="13_myjoi"]
 [ext_resource type="PackedScene" uid="uid://c85v14q3uiefo" path="res://Scenes/Interactable/invisible_platform.tscn" id="14_6i17h"]
 [ext_resource type="PackedScene" uid="uid://cc3ybw52vcs6u" path="res://Scenes/Interactable/moving_platform.tscn" id="15_u4avt"]
@@ -207,12 +206,6 @@ position = Vector2(30, 437)
 
 [node name="MovingPlatform" parent="." instance=ExtResource("15_u4avt")]
 position = Vector2(861, 224)
-
-[node name="JumpPad" parent="." instance=ExtResource("12_v81br")]
-position = Vector2(719, 296)
-
-[node name="JumpPad2" parent="." instance=ExtResource("12_v81br")]
-position = Vector2(308, 232)
 
 [node name="Canon" parent="." instance=ExtResource("16_4dunb")]
 position = Vector2(1307, 196)
