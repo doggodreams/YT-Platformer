@@ -203,7 +203,7 @@ position = Vector2(0, -1)
 shape = SubResource("CapsuleShape2D_uudk6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("20_mohwx")
+texture = ExtResource("2_0j7ia")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 process_callback = 0
